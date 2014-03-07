@@ -152,6 +152,19 @@ class JUnitTestListenerTest extends FunSuite with BeforeAndAfter with MockitoSug
     verifyNoMoreInteractions(mockTestGroupWriter2)
   }
 
+  test("UTF-8に対応出来るか") {
+    val mockTestGroupWriter = mock[TestGroupWriter]
+    when(mockTestGroupWriterFactory.createTestGroupWriter("テスト")).thenReturn(mockTestGroupWriter)
+
+    underTest.startGroup("テスト")
+
+    val mockTestEvent = createMockTestEvent("テスト")
+    underTest.testEvent(mockTestEvent)
+
+    verify(mockTestGroupWriter).addEvent(mockTestEvent)
+    verifyNoMoreInteractions(mockTestGroupWriter)
+  }
+
   def createMockTestEvent(className: String): TestEvent = {
     val mockEvent = mock[Event]
     when(mockEvent.fullyQualifiedName).thenReturn(className)
