@@ -51,7 +51,7 @@ class TestGroupXmlWriter(val name: String) extends TestGroupWriter {
         <properties/>
         {
           for (e <- testEvents; t <- e.detail) yield {
-            <testcase classname={ t.fullyQualifiedName } time={ "0" }>
+            <testcase classname={ t.fullyQualifiedName } name={ t.selector.asInstanceOf[TestSelector].testName } time={ "0" }>
               {
                 t.status match {
 				  case Status.Failure =>
@@ -73,7 +73,7 @@ class TestGroupXmlWriter(val name: String) extends TestGroupWriter {
         <system-err></system-err>
       </testsuite>
 
-    XML.save(reportDirectory.getAbsolutePath +"/TEST-"+name+".xml",resultXml,xmlDecl = true)
+    XML.save(reportDirectory.getAbsolutePath +"/"+name+".xml",resultXml,"UTF-8",xmlDecl = true)
   }
 
 }
