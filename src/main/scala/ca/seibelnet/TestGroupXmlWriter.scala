@@ -73,7 +73,8 @@ class TestGroupXmlWriter(val name: String) extends TestGroupWriter {
         <system-err></system-err>
       </testsuite>
 
-    XML.save(reportDirectory.getAbsolutePath +"/"+name+".xml",resultXml,"UTF-8",xmlDecl = true)
+    val encoding: String = scala.io.Codec.default.charSet.toString
+    XML.save(reportDirectory.getAbsolutePath +"/"+name+".xml",resultXml,encoding,xmlDecl = true)
   }
 
 }
